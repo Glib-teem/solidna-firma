@@ -13,3 +13,118 @@
 @import url('./cart.css');
 @import url('./not-found.css');
 @import url('./helpers.css');
+
+:root {
+  /* Змінні для світлої теми (за замовчуванням) */
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --secondary-text-color: #666666;
+  --accent-color: #ff6b0a;
+  --border-color: #e0e0e0;
+  --card-bg-color: #ffffff;
+  --input-bg-color: #f5f5f5;
+  --input-text-color: #333333;
+  --modal-bg-color: #ffffff;
+  --link-color: #007bff;
+  --hover-color: #e55a00;
+}
+
+[data-theme='dark'] {
+  /* Змінні для темної теми */
+  --bg-color: #222222; /* Темний фон сторінки */
+  --text-color: #f0f0f0; /* Світлий текст */
+  --secondary-text-color: #aaaaaa;
+  --accent-color: #ff6b0a;
+  --border-color: #444444;
+  --card-bg-color: #333333;
+  --input-bg-color: #444444;
+  --input-text-color: #f0f0f0;
+  --modal-bg-color: #333333;
+  --link-color: #88bbff;
+  --hover-color: #ff8833;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header {
+  background-color: var(--card-bg-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.search-form__input {
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.nav__link {
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.nav__link--active {
+  color: var(--accent-color);
+}
+
+button {
+  color: var(--text-color);
+}
+
+svg {
+  fill: var(--text-color);
+  stroke: var(--text-color);
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.logo__icon {
+  fill: #ff6b0a;
+  stroke: none;
+}
+.products__brand,
+.products__category {
+  font-size: 0.8em;
+  line-height: 1.4;
+
+  color: var(--secondary-text-color);
+  transition: color 0.3s ease;
+}
+
+/* Стилі, що застосовуються ТІЛЬКИ коли активована темна тема */
+[data-theme='dark'] .products__brand,
+[data-theme='dark'] .products__category {
+  color: var(--accent-color); /* Помаранчевий колір для тексту в темній темі */
+}
+.scroll-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #ff6b0a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Прихований за замовчуванням */
+  visibility: hidden; /* Прихований за замовчуванням */
+  pointer-events: none; /* Не перехоплює події, коли прихований */
+  transition: opacity 0.3s, visibility 0.3s; /* Плавний перехід */
+  z-index: 100;
+}
+
+.scroll-top-btn--visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto; /* Дозволяє кліки, коли видимий */
+}

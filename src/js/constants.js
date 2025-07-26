@@ -26,6 +26,8 @@ export const CSS_CLASSES = {
   CATEGORY_ACTIVE: 'categories__btn--active',
   NOT_FOUND_VISIBLE: 'not-found--visible',
   NAV_ACTIVE: 'nav__link--active',
+  // ДОДАНО: Клас для відображення кнопки "Scroll to Top"
+  SCROLL_TOP_VISIBLE: 'scroll-top-btn--visible',
 };
 
 // Button texts

@@ -27,11 +27,11 @@ import {
   hideElement,
   showLoader,
   hideLoader,
-  toggleTheme,
-  scrollToTop,
+  toggleTheme, // Функція для перемикання теми
+  scrollToTop, // Функція для прокрутки наверх
   showToast,
 } from './helpers.js';
-import { BUTTON_TEXTS, MESSAGES } from './constants.js';
+import { BUTTON_TEXTS, MESSAGES, CSS_CLASSES } from './constants.js';
 
 // Global state
 let currentPage = 1;
@@ -254,7 +254,7 @@ export async function handleLoadMore() {
   } catch (error) {
     console.error('Error loading more products:', error);
     showToast('Error loading more products', 'error');
-    currentPage--; // Revert page increment
+    currentPage--;
   } finally {
     hideLoader();
     isLoading = false;
@@ -307,12 +307,12 @@ export function handleCartClick() {
 
 // Theme toggle handler
 export function handleThemeToggle() {
-  toggleTheme();
+  toggleTheme(); // Викликає функцію з helpers.js
 }
 
 // Scroll to top handler
 export function handleScrollToTop() {
-  scrollToTop();
+  scrollToTop(); // Викликає функцію з helpers.js
 }
 
 // Buy products handler (for cart page)
@@ -340,15 +340,35 @@ export function handleBuyProducts() {
   showToast(MESSAGES.PURCHASE_SUCCESS, 'success');
 }
 
-// Initialize scroll listener for scroll-to-top button
+// Ініціалізація слухача прокручування для кнопки "Scroll to Top"
 export function initScrollListener() {
-  window.addEventListener('scroll', () => {
-    if (refs.scrollTopBtn) {
-      if (window.pageYOffset > 300) {
-        refs.scrollTopBtn.style.display = 'block';
-      } else {
-        refs.scrollTopBtn.style.display = 'none';
-      }
+  window.addEventListener('scroll', toggleScrollTopButtonVisibility);
+  // Викликаємо один раз при завантаженні, щоб встановити початковий стан кнопки
+  toggleScrollTopButtonVisibility();
+}
+
+// Функція, яка керує видимістю кнопки "Scroll to Top"
+function toggleScrollTopButtonVisibility() {
+  if (refs.scrollTopBtn) {
+    const documentHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
+
+    // Поріг, наскільки близько до кінця сторінки потрібно бути, щоб кнопка з'явилася
+    const thresholdFromBottom = 100;
+
+    if (
+      scrollPosition + viewportHeight >=
+      documentHeight - thresholdFromBottom
+    ) {
+      refs.scrollTopBtn.classList.add(CSS_CLASSES.SCROLL_TOP_VISIBLE);
+      // Якщо ви використовуєте 'is-hidden' для початкового приховування, розкоментуйте:
+      // refs.scrollTopBtn.classList.remove(CSS_CLASSES.HIDDEN);
+    } else {
+      refs.scrollTopBtn.classList.remove(CSS_CLASSES.SCROLL_TOP_VISIBLE);
+      // Якщо ви використовуєте 'is-hidden' для початкового приховування, розкоментуйте:
+      // refs.scrollTopBtn.classList.add(CSS_CLASSES.HIDDEN);
     }
-  });
+  }
 }
